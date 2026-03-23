@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abitur Intensivkurs – Mathematik 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --surface2: #16161e;
+  --border: rgba(255,255,255,0.07);
+  --border-h: rgba(255,255,255,0.14);
+  --text: #f0eeea;
+  --muted: #7a7880;
+  --muted2: #3e3c45;
+  --accent: #6ee7b7;
+  --accent-bg: rgba(110,231,183,0.08);
+  --lk: #f59e0b;
+  --lk-bg: rgba(245,158,11,0.08);
+  --white: #ffffff;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Instrument Sans', sans-serif; overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 64px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(10,10,15,0.88); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:var(--white); text-decoration:none; }
+.nav-logo em { font-style:normal; color:var(--accent); }
+.nav-links { display:flex; align-items:center; gap:32px; }
+.nav-links a { font-size:13px; font-weight:500; color:var(--muted); text-decoration:none; transition:color .2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-cta {
+  background:var(--accent) !important; color:var(--bg) !important;
+  padding:9px 22px !important; font-family:'Syne',sans-serif !important;
+  font-weight:700 !important; font-size:12px !important;
+  letter-spacing:.06em !important; transition:opacity .2s !important;
+}
+.nav-cta:hover { opacity:.85 !important; }
+
+/* HERO */
+.hero {
+  min-height:100vh; display:grid; grid-template-columns:1fr 380px;
+  align-items:center; padding:100px 64px 80px; gap:60px; position:relative; overflow:hidden;
+}
+.hero-mesh {
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 85% 15%, rgba(110,231,183,.065) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 65% at 10% 85%, rgba(59,130,246,.05) 0%, transparent 55%);
+}
+.hero-grid {
+  position:absolute; inset:0; pointer-events:none;
+  background-image: linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%,black 20%,transparent 80%);
+}
+.hero-left { position:relative; z-index:2; animation:fadeUp .7s ease both; }
+.hero-eyebrow { display:inline-flex; align-items:center; gap:8px; margin-bottom:24px; }
+.edot { width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent); animation:pulse 2.5s ease infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 12px var(--accent)} 50%{box-shadow:0 0 4px var(--accent)} }
+.etxt { font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--accent); }
+.hero-title { font-family:'Syne',sans-serif; font-size:clamp(54px,7vw,92px); font-weight:800; line-height:.9; letter-spacing:-.03em; color:var(--white); margin-bottom:26px; }
+.hero-title .outline { -webkit-text-stroke:1px rgba(255,255,255,.2); color:transparent; }
+.hero-title .hl { color:var(--accent); }
+.hero-desc { font-size:16px; color:var(--muted); line-height:1.7; max-width:480px; margin-bottom:40px; }
+.hero-actions { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+.btn-primary {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--accent); color:var(--bg);
+  font-family:'Syne',sans-serif; font-size:13px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  padding:16px 32px; text-decoration:none; transition:opacity .2s, transform .2s;
+}
+.btn-primary:hover { opacity:.88; transform:translateY(-1px); }
+.btn-ghost {
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid var(--border-h); color:var(--muted); font-size:13px; font-weight:500;
+  padding:16px 26px; text-decoration:none; transition:border-color .2s, color .2s;
+}
+.btn-ghost:hover { border-color:var(--text); color:var(--text); }
+.hero-right { position:relative; z-index:2; animation:fadeUp .7s .15s ease both; display:flex; flex-direction:column; gap:3px; }
+.hstat {
+  background:var(--surface); border:1px solid var(--border);
+  padding:20px 28px; border-left:2px solid transparent; transition:border-color .2s;
+}
+.hstat:hover { border-left-color:var(--accent); }
+.hstat-n { font-family:'Syne',sans-serif; font-size:38px; font-weight:800; color:var(--white); line-height:1; letter-spacing:-.02em; margin-bottom:4px; }
+.hstat-n sup { font-size:14px; color:var(--muted); vertical-align:super; }
+.hstat-l { font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
+
+/* SECTIONS */
+section { padding:100px 64px; }
+.sec-label { font-size:10px; font-weight:600; letter-spacing:.25em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+.sec-title { font-family:'Syne',sans-serif; font-size:clamp(30px,4vw,46px); font-weight:800; line-height:1.05; letter-spacing:-.02em; color:var(--white); margin-bottom:14px; }
+.sec-sub { font-size:15px; color:var(--muted); max-width:460px; line-height:1.7; }
+
+/* KURSE */
+#kurse { background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.kurse-head { margin-bottom:56px; }
+.kurse-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.kurs-card {
+  background:var(--bg); border:1px solid var(--border);
+  padding:40px 36px; position:relative; overflow:hidden;
+  transition:border-color .25s, transform .25s;
+}
+.kurs-card:hover { transform:translateY(-3px); }
+.kurs-card.lk { border-top:2px solid var(--lk); }
+.kurs-card.lk:hover { border-color:rgba(245,158,11,.35); border-top-color:var(--lk); }
+.kurs-card.gk { border-top:2px solid var(--accent); }
+.kurs-card.gk:hover { border-color:rgba(110,231,183,.25); border-top-color:var(--accent); }
+.kc-bg { position:absolute; bottom:-20px; right:-10px; font-family:'Syne',sans-serif; font-size:120px; font-weight:800; line-height:1; pointer-events:none; letter-spacing:-.04em; }
+.kurs-card.lk .kc-bg { color:rgba(245,158,11,.03); }
+.kurs-card.gk .kc-bg { color:rgba(110,231,183,.03); }
+.kurs-badge { display:inline-block; font-size:9px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; padding:5px 12px; margin-bottom:20px; }
+.kurs-card.lk .kurs-badge { background:var(--lk-bg); color:var(--lk); border:1px solid rgba(245,158,11,.2); }
+.kurs-card.gk .kurs-badge { background:var(--accent-bg); color:var(--accent); border:1px solid rgba(110,231,183,.2); }
+.kurs-name { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; color:var(--white); letter-spacing:-.02em; margin-bottom:6px; }
+.kurs-sub { font-size:13px; color:var(--muted); margin-bottom:24px; }
+.kurs-date {
+  display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:500;
+  color:var(--text); background:var(--surface2); border:1px solid var(--border); padding:8px 14px; margin-bottom:28px;
+}
+.kurs-feats { list-style:none; display:flex; flex-direction:column; gap:11px; margin-bottom:32px; }
+.kurs-feats li { display:flex; align-items:flex-start; gap:12px; font-size:13.5px; color:rgba(240,238,234,.7); line-height:1.45; }
+.kurs-feats li .ic { flex-shrink:0; margin-top:2px; font-size:11px; }
+.kurs-card.lk .kurs-feats li .ic { color:var(--lk); }
+.kurs-card.gk .kurs-feats li .ic { color:var(--accent); }
+.kurs-cta {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'Syne',sans-serif; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  text-decoration:none; padding:14px 24px; transition:opacity .2s; position:relative; z-index:1;
+}
+.kurs-card.lk .kurs-cta { background:var(--lk); color:var(--bg); }
+.kurs-card.gk .kurs-cta { background:var(--accent); color:var(--bg); }
+.kurs-cta:hover { opacity:.85; }
+
+/* PREISE */
+#preise { }
+.preise-grid { display:grid; grid-template-columns:1fr 1fr 1.1fr; gap:20px; margin-top:56px; }
+.preis-card {
+  background:var(--surface); border:1px solid var(--border);
+  padding:36px 30px; position:relative; overflow:hidden;
+  transition:border-color .25s, transform .2s;
+}
+.preis-card:hover { transform:translateY(-3px); }
+.preis-card.featured {
+  border-color:rgba(110,231,183,.3);
+  background:linear-gradient(145deg, rgba(110,231,183,.05) 0%, var(--surface) 60%);
+}
+.preis-card.featured::before {
+  content:'Empfohlen';
+  position:absolute; top:16px; right:16px;
+  background:var(--accent); color:var(--bg);
+  font-family:'Syne',sans-serif; font-size:9px; font-weight:700;
+  letter-spacing:.15em; text-transform:uppercase; padding:4px 10px;
+}
+.preis-badge { font-size:9px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; padding:4px 10px; margin-bottom:20px; display:inline-block; }
+.preis-card:nth-child(1) .preis-badge { background:var(--lk-bg); color:var(--lk); border:1px solid rgba(245,158,11,.2); }
+.preis-card:nth-child(2) .preis-badge { background:var(--accent-bg); color:var(--accent); border:1px solid rgba(110,231,183,.2); }
+.preis-card:nth-child(3) .preis-badge { background:rgba(139,92,246,.1); color:#a78bfa; border:1px solid rgba(139,92,246,.2); }
+.preis-title { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:var(--white); margin-bottom:8px; }
+.preis-desc { font-size:12.5px; color:var(--muted); margin-bottom:24px; line-height:1.5; }
+.preis-amount { font-family:'Syne',sans-serif; font-size:54px; font-weight:800; line-height:1; letter-spacing:-.03em; color:var(--white); margin-bottom:4px; }
+.preis-amount sup { font-size:22px; font-weight:600; vertical-align:super; }
+.preis-period { font-size:11px; color:var(--muted); margin-bottom:28px; }
+.preis-features { list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:32px; padding-top:20px; border-top:1px solid var(--border); }
+.preis-features li { display:flex; align-items:center; gap:10px; font-size:13px; color:rgba(240,238,234,.7); }
+.preis-features li .chk { font-size:11px; font-weight:700; flex-shrink:0; }
+.preis-card:nth-child(1) .preis-features li .chk { color:var(--lk); }
+.preis-card:nth-child(2) .preis-features li .chk { color:var(--accent); }
+.preis-card:nth-child(3) .preis-features li .chk { color:#a78bfa; }
+.preis-features li.muted { color:var(--muted2); }
+.preis-features li.muted .chk { color:var(--muted2); }
+.preis-btn {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  font-family:'Syne',sans-serif; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  padding:14px; text-decoration:none; transition:opacity .2s; width:100%;
+}
+.preis-card:nth-child(1) .preis-btn { background:var(--lk); color:var(--bg); }
+.preis-card:nth-child(2) .preis-btn { background:var(--accent); color:var(--bg); }
+.preis-card:nth-child(3) .preis-btn { background:#a78bfa; color:var(--bg); }
+.preis-btn:hover { opacity:.85; }
+.preis-note { font-size:11px; color:var(--muted); text-align:center; margin-top:10px; }
+
+/* ABLAUF */
+#ablauf { background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.ablauf-inner { display:grid; grid-template-columns:1fr 420px; gap:80px; align-items:start; }
+.steps { display:flex; flex-direction:column; gap:0; margin-top:48px; }
+.step { display:flex; gap:24px; padding:24px 0; border-bottom:1px solid var(--border); }
+.step:last-child { border-bottom:none; }
+.step-num { font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:.1em; color:var(--muted2); min-width:28px; padding-top:3px; }
+.step-content h4 { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--white); margin-bottom:4px; }
+.step-content p { font-size:13px; color:var(--muted); line-height:1.6; }
+.price-summary {
+  background:var(--bg); border:1px solid var(--border); padding:40px 34px;
+  position:sticky; top:90px;
+}
+.ps-label { font-size:10px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:18px; }
+.ps-price { font-family:'Syne',sans-serif; font-size:68px; font-weight:800; line-height:1; letter-spacing:-.03em; color:var(--white); margin-bottom:6px; }
+.ps-price sup { font-size:26px; font-weight:600; vertical-align:super; }
+.ps-sub { font-size:12px; color:var(--muted); margin-bottom:24px; }
+.ps-incl { list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:28px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+.ps-incl li { display:flex; align-items:center; gap:10px; font-size:13px; color:rgba(240,238,234,.7); }
+.ps-incl li::before { content:'✓'; color:var(--accent); font-size:11px; font-weight:700; flex-shrink:0; }
+.ps-cta {
+  display:flex; align-items:center; justify-content:center; gap:10px; width:100%;
+  background:var(--white); color:var(--bg);
+  font-family:'Syne',sans-serif; font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  padding:18px; text-decoration:none; transition:opacity .2s;
+}
+.ps-cta:hover { opacity:.88; }
+.ps-cta .arr { color:var(--accent); }
+
+/* FAQ */
+#faq { }
+.faq-inner { display:grid; grid-template-columns:280px 1fr; gap:80px; }
+.faq-list { display:flex; flex-direction:column; gap:2px; }
+.faq-item { border:1px solid var(--border); background:var(--surface); overflow:hidden; }
+.faq-q {
+  width:100%; background:none; border:none; color:var(--text);
+  font-family:'Instrument Sans',sans-serif; font-size:14px; font-weight:500; text-align:left;
+  padding:20px 24px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px;
+  transition:color .2s;
+}
+.faq-q:hover { color:var(--white); }
+.faq-ic { font-size:20px; color:var(--muted); transition:transform .3s; flex-shrink:0; line-height:1; }
+.faq-item.open .faq-ic { transform:rotate(45deg); color:var(--accent); }
+.faq-a { max-height:0; overflow:hidden; transition:max-height .35s ease; }
+.faq-a-inner { padding:0 24px 20px; font-size:13.5px; color:var(--muted); line-height:1.7; }
+.faq-item.open .faq-a { max-height:200px; }
+
+/* FOOTER */
+footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 64px 40px; }
+.footer-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:48px; gap:40px; }
+.footer-logo { font-family:'Syne',sans-serif; font-size:18px; font-weight:800; color:var(--white); margin-bottom:10px; }
+.footer-logo em { font-style:normal; color:var(--accent); }
+.footer-tagline { font-size:12px; color:var(--muted); max-width:220px; line-height:1.6; }
+.fc-head { font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.footer-contact p { font-size:12.5px; color:var(--muted); margin-bottom:5px; }
+.footer-contact p strong { color:var(--text); font-weight:500; }
+.footer-bottom { display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:28px; }
+.footer-copy { font-size:11.5px; color:var(--muted2); }
+.footer-links { display:flex; gap:24px; }
+.footer-links a { font-size:11.5px; color:var(--muted2); text-decoration:none; transition:color .2s; }
+.footer-links a:hover { color:var(--muted); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.reveal { opacity:0; transform:translateY(22px); transition:opacity .6s ease,transform .6s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+@media(max-width:960px){
+  nav { padding:0 24px; }
+  .hero { grid-template-columns:1fr; padding:100px 24px 60px; }
+  .hero-right { flex-direction:row; flex-wrap:wrap; gap:8px; }
+  .hstat { flex:1; min-width:120px; }
+  section { padding:72px 24px; }
+  .kurse-grid,.preise-grid,.ablauf-inner,.faq-inner { grid-template-columns:1fr; }
+  footer { padding:48px 24px 32px; }
+  .footer-top { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Mein<em>Schul</em>zentrum</a>
+  <div class="nav-links">
+    <a href="#kurse">Kurse</a>
+    <a href="#preise">Preise</a>
+    <a href="#ablauf">Ablauf</a>
+    <a href="#faq">FAQ</a>
+    <a href="anmeldung.html" class="nav-cta">Jetzt anmelden</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow"><div class="edot"></div><span class="etxt">Mathematik · Abitur 2025</span></div>
+    <h1 class="hero-title">
+      Abitur<br>
+      <span class="outline">Intensiv</span><br>
+      <span class="hl">Kurs.</span>
+    </h1>
+    <p class="hero-desc">Gezielt. Effizient. In drei Tagen zur optimalen Prüfungsvorbereitung — für Leistungs- und Grundkurs.</p>
+    <div class="hero-actions">
+      <a href="anmeldung.html" class="btn-primary">Jetzt anmelden →</a>
+      <a href="#kurse" class="btn-ghost">Kurse ansehen</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Kurstage</div></div>
+    <div class="hstat"><div class="hstat-n">3,5<sup>h</sup></div><div class="hstat-l">Pro Tag</div></div>
+    <div class="hstat"><div class="hstat-n">99<sup>€</sup></div><div class="hstat-l">Pro Kurs</div></div>
+    <div class="hstat"><div class="hstat-n">≤10</div><div class="hstat-l">Teilnehmer</div></div>
+  </div>
+</section>
+
+<!-- KURSE -->
+<section id="kurse">
+  <div class="kurse-head reveal">
+    <p class="sec-label">Unsere Kurse</p>
+    <h2 class="sec-title">Zwei Kurse.<br>Ein Ziel.</h2>
+    <p class="sec-sub">Wähle das passende Niveau für deine Abiturprüfung — beide Kurse geben dir das Werkzeug, das du brauchst.</p>
+  </div>
+  <div class="kurse-grid">
+    <div class="kurs-card lk reveal">
+      <div class="kc-bg">LK</div>
+      <span class="kurs-badge">Leistungskurs</span>
+      <h3 class="kurs-name">Vertiefungskurs</h3>
+      <p class="kurs-sub">Für maximale Punkte im Leistungskurs Mathematik</p>
+      <div class="kurs-date">📅 1. – 3. April &nbsp;|&nbsp; 10:00 – 13:30 Uhr</div>
+      <ul class="kurs-feats">
+        <li><span class="ic">◆</span> Komplexe Analysis und Vektorrechnung</li>
+        <li><span class="ic">◆</span> Tiefgehende Themenanalyse & Modellierung</li>
+        <li><span class="ic">◆</span> Prüfungsstrategien für 15-Punkte-Ziele</li>
+        <li><span class="ic">◆</span> Klausurtraining mit Originalaufgaben</li>
+        <li><span class="ic">◆</span> Zeitmanagement & Drucksimulation</li>
+      </ul>
+      <a href="anmeldung.html?kurs=lk" class="kurs-cta">Zum LK anmelden →</a>
+    </div>
+    <div class="kurs-card gk reveal">
+      <div class="kc-bg">GK</div>
+      <span class="kurs-badge">Grundkurs</span>
+      <h3 class="kurs-name">Basiskurs</h3>
+      <p class="kurs-sub">Solide Grundlagen für eine sichere Prüfung</p>
+      <div class="kurs-date">📅 8. – 10. April &nbsp;|&nbsp; 10:00 – 13:30 Uhr</div>
+      <ul class="kurs-feats">
+        <li><span class="ic">◆</span> Wesentliche Prüfungsthemen im Überblick</li>
+        <li><span class="ic">◆</span> Wissenslücken schließen & festigen</li>
+        <li><span class="ic">◆</span> Aufgabentypen systematisch meistern</li>
+        <li><span class="ic">◆</span> Effektive Lösungsstrategien</li>
+        <li><span class="ic">◆</span> Übungsklausuren mit individuellem Feedback</li>
+      </ul>
+      <a href="anmeldung.html?kurs=gk" class="kurs-cta">Zum GK anmelden →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PREISE -->
+<section id="preise">
+  <div class="reveal">
+    <p class="sec-label">Preise & Pakete</p>
+    <h2 class="sec-title">Transparent.<br>Fair. Einmalig.</h2>
+    <p class="sec-sub">Keine Abos, keine versteckten Kosten — ein Preis, alles inklusive.</p>
+  </div>
+  <div class="preise-grid">
+    <div class="preis-card reveal">
+      <span class="preis-badge">Leistungskurs</span>
+      <h3 class="preis-title">LK Einzelkurs</h3>
+      <p class="preis-desc">Intensivvorbereitung für den Leistungskurs Mathematik</p>
+      <div class="preis-amount"><sup>€</sup>99</div>
+      <p class="preis-period">Einmalig · 1.–3. April</p>
+      <ul class="preis-features">
+        <li><span class="chk">✓</span> 3 × 3,5 Stunden Unterricht</li>
+        <li><span class="chk">✓</span> LK-Übungsmaterial</li>
+        <li><span class="chk">✓</span> Originalklausuren + Lösungen</li>
+        <li><span class="chk">✓</span> Max. 10 Teilnehmer</li>
+        <li><span class="chk">✓</span> Persönliche Lernberatung</li>
+        <li class="muted"><span class="chk">–</span> GK-Inhalte nicht enthalten</li>
+      </ul>
+      <a href="anmeldung.html?kurs=lk" class="preis-btn">LK buchen →</a>
+    </div>
+    <div class="preis-card reveal">
+      <span class="preis-badge">Grundkurs</span>
+      <h3 class="preis-title">GK Einzelkurs</h3>
+      <p class="preis-desc">Solide Vorbereitung für den Grundkurs Mathematik</p>
+      <div class="preis-amount"><sup>€</sup>99</div>
+      <p class="preis-period">Einmalig · 8.–10. April</p>
+      <ul class="preis-features">
+        <li><span class="chk">✓</span> 3 × 3,5 Stunden Unterricht</li>
+        <li><span class="chk">✓</span> GK-Übungsmaterial</li>
+        <li><span class="chk">✓</span> Originalklausuren + Lösungen</li>
+        <li><span class="chk">✓</span> Max. 10 Teilnehmer</li>
+        <li><span class="chk">✓</span> Persönliche Lernberatung</li>
+        <li class="muted"><span class="chk">–</span> LK-Inhalte nicht enthalten</li>
+      </ul>
+      <a href="anmeldung.html?kurs=gk" class="preis-btn">GK buchen →</a>
+    </div>
+    <div class="preis-card featured reveal">
+      <span class="preis-badge">Kombi</span>
+      <h3 class="preis-title">Kombi-Paket</h3>
+      <p class="preis-desc">Beide Kurse — für maximale Sicherheit in der Prüfung</p>
+      <div class="preis-amount"><sup>€</sup>179</div>
+      <p class="preis-period">Einmalig · LK + GK (statt 198 €)</p>
+      <ul class="preis-features">
+        <li><span class="chk">✓</span> Beide Kurse (6 × 3,5 h)</li>
+        <li><span class="chk">✓</span> Gesamtes Übungsmaterial</li>
+        <li><span class="chk">✓</span> Alle Originalklausuren</li>
+        <li><span class="chk">✓</span> Max. 10 Teilnehmer je Gruppe</li>
+        <li><span class="chk">✓</span> Erweiterte Lernberatung</li>
+        <li><span class="chk">✓</span> 19 € gespart</li>
+      </ul>
+      <a href="anmeldung.html?kurs=beide" class="preis-btn">Kombi buchen →</a>
+      <p class="preis-note">Günstigstes Angebot</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABLAUF -->
+<section id="ablauf">
+  <div class="ablauf-inner">
+    <div class="reveal">
+      <p class="sec-label">Ablauf</p>
+      <h2 class="sec-title">So funktioniert's</h2>
+      <p class="sec-sub">Von der Anmeldung bis zum bestandenen Abitur — einfach und klar.</p>
+      <div class="steps">
+        <div class="step"><span class="step-num">01</span><div class="step-content"><h4>Kurs auswählen</h4><p>Wähle LK, GK oder das Kombi-Paket — je nach deinen Anforderungen und Zielen.</p></div></div>
+        <div class="step"><span class="step-num">02</span><div class="step-content"><h4>Online anmelden</h4><p>Fülle das Anmeldeformular aus. Du erhältst sofort eine Bestätigungs-E-Mail.</p></div></div>
+        <div class="step"><span class="step-num">03</span><div class="step-content"><h4>Zahlung</h4><p>Du erhältst eine Rechnung per E-Mail. Zahlung per Überweisung oder PayPal möglich.</p></div></div>
+        <div class="step"><span class="step-num">04</span><div class="step-content"><h4>Kurs besuchen</h4><p>Erscheine an den drei Kurstagen und profitiere von intensivem Kleingruppenunterricht.</p></div></div>
+        <div class="step"><span class="step-num">05</span><div class="step-content"><h4>Abitur bestehen</h4><p>Mit optimaler Vorbereitung und dem richtigen Werkzeug sicher in die Prüfung.</p></div></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="price-summary">
+        <p class="ps-label">Pro Kurs</p>
+        <div class="ps-price"><sup>€</sup>99</div>
+        <p class="ps-sub">Einmalzahlung · Keine versteckten Kosten</p>
+        <ul class="ps-incl">
+          <li>3 Tage à 3,5 Stunden Unterricht</li>
+          <li>Hochwertiges Übungsmaterial</li>
+          <li>Originalklausuren mit Lösungen</li>
+          <li>Persönliche Lernberatung</li>
+          <li>Max. 10 Teilnehmer pro Gruppe</li>
+        </ul>
+        <a href="anmeldung.html" class="ps-cta">Jetzt anmelden <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-inner">
+    <div class="reveal">
+      <p class="sec-label">FAQ</p>
+      <h2 class="sec-title">Häufige Fragen</h2>
+      <p class="sec-sub">Alles was du wissen musst.</p>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Kann ich mich für beide Kurse anmelden?<span class="faq-ic">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Ja! Mit unserem Kombi-Paket buchst du beide Kurse zum Vorzugspreis von 179 € (statt 198 €). Du sparst damit 19 €.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Wie groß sind die Gruppen?<span class="faq-ic">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Jede Gruppe ist auf maximal 10 Teilnehmer begrenzt, damit jeder die Aufmerksamkeit bekommt, die er braucht.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Was passiert nach der Anmeldung?<span class="faq-ic">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Du erhältst sofort eine Bestätigungs-E-Mail mit Kursort, Zeiten, Zahlungsinformationen und allem was du mitbringen sollst.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Gibt es eine Stornierungsmöglichkeit?<span class="faq-ic">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Bis 7 Tage vor Kursbeginn ist eine kostenlose Stornierung möglich. Danach fällt eine Bearbeitungsgebühr von 25 € an.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Wo findet der Kurs statt?<span class="faq-ic">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Der genaue Ort wird nach der Anmeldung per E-Mail mitgeteilt. Der Kurs findet in unseren Räumlichkeiten in der Nähe des Stadtzentrums statt.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Welche Zahlungsmethoden gibt es?<span class="faq-ic">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Wir akzeptieren Banküberweisung und PayPal. Die Zahlung erfolgt nach Erhalt der Rechnung per E-Mail.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Mein<em>Schul</em>zentrum</div>
+      <p class="footer-tagline">Professionelle Nachhilfe und Prüfungsvorbereitung für alle Klassenstufen.</p>
+    </div>
+    <div class="footer-contact">
+      <p class="fc-head">Kontakt</p>
+      <p><strong>info@meinschulzentrum.de</strong></p>
+      <p>0123 · 456 789 0</p>
+      <p>www.meinschulzentrum.de</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 MeinSchulzentrum · Alle Rechte vorbehalten</p>
+    <div class="footer-links">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+      <a href="#">AGB</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 80);
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

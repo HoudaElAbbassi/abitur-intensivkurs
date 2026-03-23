@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anmeldung – Mathe Abitur Intensivkurs 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --surface2: #16161e;
+  --border: rgba(255,255,255,0.07);
+  --border-focus: rgba(110,231,183,0.4);
+  --text: #f0eeea;
+  --muted: #7a7880;
+  --muted2: #504e57;
+  --accent: #6ee7b7;
+  --accent-glow: rgba(110,231,183,0.1);
+  --lk: #f59e0b;
+  --error: #f87171;
+  --success: #6ee7b7;
+  --white: #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  min-height: 100vh;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 60px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10,10,15,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.nav-logo em { font-style: normal; color: var(--accent); }
+.nav-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--text); }
+
+/* ── LAYOUT ── */
+.page {
+  padding-top: 64px;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 440px;
+}
+
+/* ── LEFT PANEL ── */
+.left-panel {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 72px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+
+.left-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.left-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+.left-title .outline {
+  -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+  color: transparent;
+}
+
+.left-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 48px;
+  max-width: 360px;
+}
+
+/* Course selector cards */
+.course-selector { margin-bottom: 40px; }
+.cs-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.cs-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cs-card {
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.2s, background 0.2s;
+  user-select: none;
+}
+.cs-card:hover { border-color: var(--border-focus); }
+.cs-card.selected-lk { border-color: var(--lk); background: rgba(245,158,11,0.05); }
+.cs-card.selected-gk { border-color: var(--accent); background: var(--accent-glow); }
+
+.cs-radio {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--muted2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+.cs-card.selected-lk .cs-radio { border-color: var(--lk); }
+.cs-card.selected-gk .cs-radio { border-color: var(--accent); }
+.cs-radio-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.cs-card.selected-lk .cs-radio-dot { background: var(--lk); opacity: 1; }
+.cs-card.selected-gk .cs-radio-dot { background: var(--accent); opacity: 1; }
+
+.cs-info { flex: 1; }
+.cs-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.cs-date { font-size: 11.5px; color: var(--muted); }
+
+.cs-badge {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+}
+.cs-card.selected-lk .cs-badge { background: rgba(245,158,11,0.15); color: var(--lk); }
+.cs-card.selected-gk .cs-badge { background: rgba(110,231,183,0.1); color: var(--accent); }
+.cs-card:not(.selected-lk):not(.selected-gk) .cs-badge { background: var(--surface2); color: var(--muted); }
+
+/* Summary block */
+.summary-block {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.summary-row:last-child { border-bottom: none; padding-bottom: 0; }
+.sum-label { font-size: 12px; color: var(--muted); }
+.sum-value { font-size: 12px; font-weight: 500; color: var(--text); }
+.sum-value.price {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--white);
+}
+
+/* ── RIGHT PANEL (FORM) ── */
+.right-panel {
+  padding: 72px 48px;
+  background: var(--bg);
+}
+
+.form-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.form-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+
+.form-section {
+  margin-bottom: 36px;
+}
+.form-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+.form-group.full { grid-column: 1 / -1; }
+
+label {
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+label .req { color: var(--accent); margin-left: 2px; }
+
+input, select, textarea {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 13px 16px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s, background 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+input::placeholder, textarea::placeholder { color: var(--muted2); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--border-focus);
+  background: var(--surface2);
+}
+input.error, select.error { border-color: var(--error); }
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7880' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+select option { background: var(--surface); color: var(--text); }
+
+textarea { resize: vertical; min-height: 90px; }
+
+.field-hint {
+  font-size: 11px;
+  color: var(--muted2);
+  line-height: 1.4;
+}
+.field-error {
+  font-size: 11px;
+  color: var(--error);
+  display: none;
+}
+.field-error.show { display: block; }
+
+/* CHECKBOX */
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+.checkbox-group input[type="checkbox"] {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  padding: 0;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+.checkbox-label {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.checkbox-label a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.checkbox-label a:hover { text-decoration: underline; }
+
+/* SUBMIT BTN */
+.submit-btn {
+  width: 100%;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 18px 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: opacity 0.2s, transform 0.15s;
+  margin-top: 8px;
+}
+.submit-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.submit-btn:active { transform: translateY(0); }
+.submit-btn .arrow { font-size: 16px; }
+.submit-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+/* SUCCESS STATE */
+.success-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 40px;
+  min-height: 400px;
+}
+.success-screen.show { display: flex; }
+.success-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  border: 1px solid rgba(110,231,183,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 28px;
+}
+.success-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+.success-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 300px;
+  margin-bottom: 36px;
+}
+.success-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-focus);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 12px 24px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.success-back:hover { background: var(--accent-glow); }
+
+/* Mesh bg */
+.page-mesh {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%, rgba(110,231,183,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, rgba(59,130,246,0.03) 0%, transparent 55%);
+}
+.page { position: relative; z-index: 1; }
+
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .page { grid-template-columns: 1fr; }
+  .left-panel { position: relative; height: auto; padding: 48px 24px 36px; }
+  .right-panel { padding: 48px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-mesh"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Mein<em>Schul</em>zentrum</a>
+  <a href="index.html" class="nav-back">← Zurück zur Übersicht</a>
+</nav>
+
+<div class="page">
+
+  <!-- LEFT: SUMMARY -->
+  <div class="left-panel">
+    <div class="left-eyebrow">
+      <div class="eyebrow-dot"></div>
+      Anmeldung
+    </div>
+    <h1 class="left-title">
+      Dein Platz<br>
+      im <span class="outline">Intensiv</span><br>
+      Kurs.
+    </h1>
+    <p class="left-desc">
+      Sichere dir jetzt einen der begehrten Plätze. Die Kurse sind auf max. 10 Personen begrenzt.
+    </p>
+
+    <!-- Course Selector -->
+    <div class="course-selector">
+      <p class="cs-label">Kurs wählen</p>
+      <div class="cs-cards">
+        <div class="cs-card" id="card-lk" onclick="selectCourse('lk')">
+          <div class="cs-radio"><div class="cs-radio-dot"></div></div>
+          <div class="cs-info">
+            <div class="cs-name">Leistungskurs</div>
+            <div class="cs-date">1.–3. April · 10:00–13:30 Uhr</div>
+          </div>
+          <span class="cs-badge">LK</span>
+        </div>
+        <div class="cs-card" id="card-gk" onclick="selectCourse('gk')">
+          <div class="cs-radio"><div class="cs-radio-dot"></div></div>
+          <div class="cs-info">
+            <div class="cs-name">Grundkurs</div>
+            <div class="cs-date">8.–10. April · 10:00–13:30 Uhr</div>
+          </div>
+          <span class="cs-badge">GK</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="summary-block">
+      <div class="summary-row">
+        <span class="sum-label">Kurs</span>
+        <span class="sum-value" id="sum-kurs">— bitte wählen</span>
+      </div>
+      <div class="summary-row">
+        <span class="sum-label">Termine</span>
+        <span class="sum-value" id="sum-dates">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="sum-label">Umfang</span>
+        <span class="sum-value">3 × 3,5 Stunden</span>
+      </div>
+      <div class="summary-row">
+        <span class="sum-label">Preis</span>
+        <span class="sum-value price">€ 99</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: FORM -->
+  <div class="right-panel">
+    <div id="form-wrapper">
+      <h2 class="form-title">Persönliche Daten</h2>
+      <p class="form-subtitle">Alle mit <span style="color:var(--accent)">*</span> markierten Felder sind Pflichtfelder.</p>
+
+      <form id="anmeldeform" novalidate>
+
+        <!-- Schüler -->
+        <div class="form-section">
+          <p class="form-section-label">Schüler / Schülerin</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="vorname">Vorname <span class="req">*</span></label>
+              <input type="text" id="vorname" name="vorname" placeholder="Max" required autocomplete="given-name">
+              <span class="field-error" id="err-vorname">Bitte Vorname eingeben.</span>
+            </div>
+            <div class="form-group">
+              <label for="nachname">Nachname <span class="req">*</span></label>
+              <input type="text" id="nachname" name="nachname" placeholder="Mustermann" required autocomplete="family-name">
+              <span class="field-error" id="err-nachname">Bitte Nachname eingeben.</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">E-Mail <span class="req">*</span></label>
+              <input type="email" id="email" name="email" placeholder="max@beispiel.de" required autocomplete="email">
+              <span class="field-error" id="err-email">Bitte gültige E-Mail eingeben.</span>
+            </div>
+            <div class="form-group">
+              <label for="telefon">Telefon</label>
+              <input type="tel" id="telefon" name="telefon" placeholder="0176 12345678" autocomplete="tel">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schule">Schule</label>
+              <input type="text" id="schule" name="schule" placeholder="Muster-Gymnasium Berlin">
+            </div>
+            <div class="form-group">
+              <label for="klasse">Klasse / Jahrgangsstufe <span class="req">*</span></label>
+              <select id="klasse" name="klasse" required>
+                <option value="">— bitte wählen</option>
+                <option value="11">Jahrgangsstufe 11</option>
+                <option value="12">Jahrgangsstufe 12 (Abitur 2025)</option>
+                <option value="13">Jahrgangsstufe 13</option>
+              </select>
+              <span class="field-error" id="err-klasse">Bitte Klasse auswählen.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Eltern -->
+        <div class="form-section">
+          <p class="form-section-label">Eltern / Erziehungsberechtigte</p>
+          <p class="form-subtitle" style="margin-bottom:18px; font-size:12px;">Falls der/die Schüler/in unter 18 Jahre alt ist.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="eltern-name">Name</label>
+              <input type="text" id="eltern-name" name="eltern_name" placeholder="Erika Mustermann" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="eltern-email">E-Mail</label>
+              <input type="email" id="eltern-email" name="eltern_email" placeholder="erika@beispiel.de" autocomplete="email">
+            </div>
+          </div>
+        </div>
+
+        <!-- Kurs -->
+        <div class="form-section">
+          <p class="form-section-label">Kursauswahl</p>
+          <div class="form-group">
+            <label for="kurs-select">Kurs <span class="req">*</span></label>
+            <select id="kurs-select" name="kurs" required>
+              <option value="">— bitte wählen</option>
+              <option value="lk">Leistungskurs · 1.–3. April</option>
+              <option value="gk">Grundkurs · 8.–10. April</option>
+              <option value="beide">Beide Kurse (LK + GK)</option>
+            </select>
+            <span class="field-error" id="err-kurs">Bitte einen Kurs auswählen.</span>
+          </div>
+          <div class="form-group">
+            <label for="vorkenntnisse">Vorkenntnisse / besondere Schwerpunkte</label>
+            <textarea id="vorkenntnisse" name="vorkenntnisse" placeholder="z.B. Schwierigkeiten bei Analysis, Vektoren gut verstanden ..."></textarea>
+            <span class="field-hint">Optional: Hilft uns, den Kurs besser auf dich abzustimmen.</span>
+          </div>
+          <div class="form-group">
+            <label for="wie-gefunden">Wie hast du von uns erfahren?</label>
+            <select id="wie-gefunden" name="wie_gefunden">
+              <option value="">— optional</option>
+              <option value="schule">Über die Schule</option>
+              <option value="freunde">Freunde / Familie</option>
+              <option value="social">Social Media</option>
+              <option value="flyer">Flyer</option>
+              <option value="google">Google / Internet</option>
+              <option value="sonstiges">Sonstiges</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Datenschutz -->
+        <div class="form-section">
+          <p class="form-section-label">Einwilligungen</p>
+          <label class="checkbox-group">
+            <input type="checkbox" id="datenschutz" name="datenschutz" required>
+            <span class="checkbox-label">
+              Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Daten zur Durchführung des Kurses zu. <span class="req">*</span>
+            </span>
+          </label>
+          <span class="field-error" id="err-datenschutz">Bitte Datenschutzerklärung akzeptieren.</span>
+          <label class="checkbox-group" style="margin-top:12px;">
+            <input type="checkbox" id="agb" name="agb" required>
+            <span class="checkbox-label">
+              Ich akzeptiere die <a href="#">AGB</a> und stimme den Stornierungsbedingungen zu. <span class="req">*</span>
+            </span>
+          </label>
+          <span class="field-error" id="err-agb">Bitte AGB akzeptieren.</span>
+          <label class="checkbox-group" style="margin-top:12px;">
+            <input type="checkbox" id="newsletter" name="newsletter">
+            <span class="checkbox-label">
+              Ich möchte über weitere Kurse und Angebote per E-Mail informiert werden. (optional)
+            </span>
+          </label>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">
+          Jetzt verbindlich anmelden <span class="arrow">→</span>
+        </button>
+
+      </form>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">✓</div>
+      <h3 class="success-title">Anmeldung<br>erfolgreich!</h3>
+      <p class="success-desc">
+        Vielen Dank! Du erhältst in Kürze eine Bestätigungs-E-Mail mit allen weiteren Details.
+      </p>
+      <a href="index.html" class="success-back">← Zurück zur Startseite</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let selectedCourse = '';
+
+// Pre-select from URL param
+const params = new URLSearchParams(window.location.search);
+const kursParam = params.get('kurs');
+if (kursParam === 'lk' || kursParam === 'gk') {
+  selectCourse(kursParam);
+}
+
+function selectCourse(type) {
+  selectedCourse = type;
+  document.getElementById('card-lk').className = 'cs-card' + (type === 'lk' ? ' selected-lk' : '');
+  document.getElementById('card-gk').className = 'cs-card' + (type === 'gk' ? ' selected-gk' : '');
+
+  const kursSelect = document.getElementById('kurs-select');
+  kursSelect.value = type;
+
+  if (type === 'lk') {
+    document.getElementById('sum-kurs').textContent = 'Leistungskurs';
+    document.getElementById('sum-dates').textContent = '1.–3. April';
+  } else {
+    document.getElementById('sum-kurs').textContent = 'Grundkurs';
+    document.getElementById('sum-dates').textContent = '8.–10. April';
+  }
+}
+
+// Sync select dropdown with sidebar cards
+document.getElementById('kurs-select').addEventListener('change', function() {
+  const val = this.value;
+  if (val === 'lk') selectCourse('lk');
+  else if (val === 'gk') selectCourse('gk');
+  else if (val === 'beide') {
+    document.getElementById('card-lk').className = 'cs-card selected-lk';
+    document.getElementById('card-gk').className = 'cs-card selected-gk';
+    document.getElementById('sum-kurs').textContent = 'LK + GK';
+    document.getElementById('sum-dates').textContent = '1.–3. & 8.–10. April';
+    selectedCourse = 'beide';
+  } else {
+    document.getElementById('card-lk').className = 'cs-card';
+    document.getElementById('card-gk').className = 'cs-card';
+    document.getElementById('sum-kurs').textContent = '— bitte wählen';
+    document.getElementById('sum-dates').textContent = '—';
+    selectedCourse = '';
+  }
+});
+
+// Form validation & submit
+document.getElementById('anmeldeform').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let valid = true;
+
+  const fields = [
+    { id: 'vorname', errId: 'err-vorname', check: v => v.trim().length > 1 },
+    { id: 'nachname', errId: 'err-nachname', check: v => v.trim().length > 1 },
+    { id: 'email', errId: 'err-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id: 'klasse', errId: 'err-klasse', check: v => v !== '' },
+    { id: 'kurs-select', errId: 'err-kurs', check: v => v !== '' },
+  ];
+
+  fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    const err = document.getElementById(f.errId);
+    if (!f.check(el.value)) {
+      el.classList.add('error');
+      err.classList.add('show');
+      valid = false;
+    } else {
+      el.classList.remove('error');
+      err.classList.remove('show');
+    }
+  });
+
+  // Checkboxes
+  ['datenschutz', 'agb'].forEach(id => {
+    const el = document.getElementById(id);
+    const err = document.getElementById('err-' + id);
+    if (!el.checked) {
+      err.classList.add('show');
+      valid = false;
+    } else {
+      err.classList.remove('show');
+    }
+  });
+
+  if (!valid) {
+    document.querySelector('.field-error.show')?.closest('.form-group, .form-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // Simulate submit
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Wird gesendet …';
+
+  setTimeout(() => {
+    document.getElementById('form-wrapper').style.display = 'none';
+    document.getElementById('success-screen').classList.add('show');
+  }, 1200);
+});
+
+// Live validation
+document.querySelectorAll('input, select').forEach(el => {
+  el.addEventListener('blur', function() {
+    if (this.classList.contains('error') && this.value.trim()) {
+      this.classList.remove('error');
+      const errEl = document.getElementById('err-' + this.id);
+      if (errEl) errEl.classList.remove('show');
+    }
+  });
+});
+</script>
+</body>
+</html>
