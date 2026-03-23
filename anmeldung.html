@@ -282,7 +282,7 @@ label {
 }
 label .req { color: var(--accent); margin-left: 2px; }
 
-input, select, textarea {
+input:not([type="checkbox"]):not([type="radio"]), select, textarea {
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text);
@@ -296,12 +296,12 @@ input, select, textarea {
   -webkit-appearance: none;
   appearance: none;
 }
-input::placeholder, textarea::placeholder { color: var(--muted2); }
-input:focus, select:focus, textarea:focus {
+input:not([type="checkbox"])::placeholder, textarea::placeholder { color: var(--muted2); }
+input:not([type="checkbox"]):not([type="radio"]):focus, select:focus, textarea:focus {
   border-color: var(--border-focus);
   background: var(--surface2);
 }
-input.error, select.error { border-color: var(--error); }
+input:not([type="checkbox"]).error, select.error { border-color: var(--error); }
 
 select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7880' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -564,9 +564,8 @@ textarea { resize: vertical; min-height: 90px; }
               <label for="klasse">Klasse / Jahrgangsstufe <span class="req">*</span></label>
               <select id="klasse" name="klasse" required>
                 <option value="">— bitte wählen</option>
-                <option value="11">Jahrgangsstufe 11</option>
-                <option value="12">Jahrgangsstufe 12 (Abitur 2025)</option>
-                <option value="13">Jahrgangsstufe 13</option>
+                <option value="q3">Q3 / Jahrgangsstufe 12 (Abitur 2027)</option>
+                <option value="q4">Q4 / Jahrgangsstufe 13 (Abitur 2026)</option>
               </select>
               <span class="field-error" id="err-klasse">Bitte Klasse auswählen.</span>
             </div>
