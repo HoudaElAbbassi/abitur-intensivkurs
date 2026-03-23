@@ -526,7 +526,8 @@ textarea { resize: vertical; min-height: 90px; }
       <h2 class="form-title">Persönliche Daten</h2>
       <p class="form-subtitle">Alle mit <span style="color:var(--accent)">*</span> markierten Felder sind Pflichtfelder.</p>
 
-      <form id="anmeldeform" novalidate>
+      <form id="anmeldeform" name="anmeldung" method="POST" data-netlify="true" novalidate>
+        <input type="hidden" name="form-name" value="anmeldung">
 
         <!-- Schüler -->
         <div class="form-section">
@@ -597,7 +598,6 @@ textarea { resize: vertical; min-height: 90px; }
               <option value="">— bitte wählen</option>
               <option value="lk">Leistungskurs · 1.–3. April</option>
               <option value="gk">Grundkurs · 8.–10. April</option>
-              <option value="beide">Beide Kurse (LK + GK)</option>
             </select>
             <span class="field-error" id="err-kurs">Bitte einen Kurs auswählen.</span>
           </div>
@@ -645,6 +645,16 @@ textarea { resize: vertical; min-height: 90px; }
           </label>
         </div>
 
+        <div style="background:var(--surface2);border:1px solid var(--border);border-left:2px solid var(--accent);padding:16px 20px;margin-bottom:20px;">
+          <p style="font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;">Was passiert nach der Anmeldung?</p>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <span style="font-size:13px;color:var(--muted);display:flex;gap:10px;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">1.</span> Deine Daten werden direkt an uns übermittelt.</span>
+            <span style="font-size:13px;color:var(--muted);display:flex;gap:10px;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">2.</span> Du erhältst eine Bestätigungs-E-Mail mit Kursort &amp; Zeitplan.</span>
+            <span style="font-size:13px;color:var(--muted);display:flex;gap:10px;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">3.</span> Wir senden dir eine Rechnung — Zahlung per Überweisung oder PayPal.</span>
+            <span style="font-size:13px;color:var(--muted);display:flex;gap:10px;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">4.</span> Dein Platz ist erst nach Zahlungseingang gesichert.</span>
+          </div>
+        </div>
+
         <button type="submit" class="submit-btn" id="submit-btn">
           Jetzt verbindlich anmelden <span class="arrow">→</span>
         </button>
@@ -657,8 +667,11 @@ textarea { resize: vertical; min-height: 90px; }
       <div class="success-icon">✓</div>
       <h3 class="success-title">Anmeldung<br>erfolgreich!</h3>
       <p class="success-desc">
-        Vielen Dank! Du erhältst in Kürze eine Bestätigungs-E-Mail mit allen weiteren Details.
+        Deine Anmeldung wurde übermittelt! Du erhältst in Kürze eine Bestätigungs-E-Mail mit Kursort, Zeiten und Zahlungsinfos.
       </p>
+      <a href="https://wa.me/491234567890" target="_blank" rel="noopener" class="success-back" style="margin-bottom:12px;border-color:rgba(37,211,102,0.4);color:#25D366;">
+        Fragen? WhatsApp schreiben
+      </a>
       <a href="index.html" class="success-back">← Zurück zur Startseite</a>
     </div>
   </div>
@@ -697,12 +710,6 @@ document.getElementById('kurs-select').addEventListener('change', function() {
   const val = this.value;
   if (val === 'lk') selectCourse('lk');
   else if (val === 'gk') selectCourse('gk');
-  else if (val === 'beide') {
-    document.getElementById('card-lk').className = 'cs-card selected-lk';
-    document.getElementById('card-gk').className = 'cs-card selected-gk';
-    document.getElementById('sum-kurs').textContent = 'LK + GK';
-    document.getElementById('sum-dates').textContent = '1.–3. & 8.–10. April';
-    selectedCourse = 'beide';
   } else {
     document.getElementById('card-lk').className = 'cs-card';
     document.getElementById('card-gk').className = 'cs-card';
@@ -755,15 +762,26 @@ document.getElementById('anmeldeform').addEventListener('submit', function(e) {
     return;
   }
 
-  // Simulate submit
+  // Submit via Netlify Forms
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
   btn.textContent = 'Wird gesendet …';
 
-  setTimeout(() => {
+  const formData = new FormData(document.getElementById('anmeldeform'));
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(formData).toString()
+  })
+  .then(() => {
     document.getElementById('form-wrapper').style.display = 'none';
     document.getElementById('success-screen').classList.add('show');
-  }, 1200);
+  })
+  .catch(() => {
+    btn.disabled = false;
+    btn.textContent = 'Jetzt verbindlich anmelden';
+    alert('Fehler beim Senden. Bitte versuche es erneut oder schreib uns auf WhatsApp.');
+  });
 });
 
 // Live validation

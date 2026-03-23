@@ -144,7 +144,7 @@ section { padding:100px 64px; }
 
 /* PREISE */
 #preise { }
-.preise-grid { display:grid; grid-template-columns:1fr 1fr 1.1fr; gap:20px; margin-top:56px; }
+.preise-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:56px; max-width:860px; }
 .preis-card {
   background:var(--surface); border:1px solid var(--border);
   padding:36px 30px; position:relative; overflow:hidden;
@@ -252,6 +252,44 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 
 .footer-links a { font-size:11.5px; color:var(--muted2); text-decoration:none; transition:color .2s; }
 .footer-links a:hover { color:var(--muted); }
 
+/* INHALTE */
+#inhalte { background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.inhalte-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:56px; }
+.inhalt-card { background:var(--bg); border:1px solid var(--border); padding:36px 32px; }
+.inhalt-card.lk { border-top:2px solid var(--lk); }
+.inhalt-card.gk { border-top:2px solid var(--accent); }
+.thema { margin-bottom:26px; }
+.thema:last-child { margin-bottom:0; }
+.thema-name {
+  font-size:10px; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+  margin-bottom:10px; display:flex; align-items:center; gap:10px;
+}
+.thema-name::after { content:''; flex:1; height:1px; background:var(--border); }
+.inhalt-card.lk .thema-name { color:var(--lk); }
+.inhalt-card.gk .thema-name { color:var(--accent); }
+.thema ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.thema ul li { font-size:13px; color:rgba(240,238,234,.65); display:flex; gap:10px; line-height:1.45; }
+.thema ul li::before { content:'·'; flex-shrink:0; font-weight:700; }
+.inhalt-card.lk .thema ul li::before { color:var(--lk); }
+.inhalt-card.gk .thema ul li::before { color:var(--accent); }
+
+/* WHATSAPP FLOAT */
+.wa-float {
+  position:fixed; bottom:28px; right:28px; z-index:200;
+  background:#25D366; color:#fff;
+  width:56px; height:56px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,0.4);
+  text-decoration:none; transition:transform .2s, box-shadow .2s;
+}
+.wa-float:hover { transform:scale(1.08); box-shadow:0 6px 24px rgba(37,211,102,0.55); }
+.wa-float-tip {
+  position:absolute; right:68px; background:var(--surface); border:1px solid var(--border);
+  color:var(--text); font-size:12px; font-weight:500; padding:6px 12px; white-space:nowrap;
+  opacity:0; pointer-events:none; transition:opacity .2s; box-shadow:0 2px 12px rgba(0,0,0,.3);
+}
+.wa-float:hover .wa-float-tip { opacity:1; }
+
 /* ANIMATIONS */
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 .reveal { opacity:0; transform:translateY(22px); transition:opacity .6s ease,transform .6s ease; }
@@ -263,9 +301,10 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 
   .hero-right { flex-direction:row; flex-wrap:wrap; gap:8px; }
   .hstat { flex:1; min-width:120px; }
   section { padding:72px 24px; }
-  .kurse-grid,.preise-grid,.ablauf-inner,.faq-inner { grid-template-columns:1fr; }
+  .kurse-grid,.preise-grid,.ablauf-inner,.faq-inner,.inhalte-grid { grid-template-columns:1fr; }
   footer { padding:48px 24px 32px; }
   .footer-top { flex-direction:column; }
+  .wa-float { bottom:20px; right:20px; width:50px; height:50px; }
 }
 </style>
 </head>
@@ -275,6 +314,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 
   <a href="index.html" class="nav-logo">Abitur<em>2026</em></a>
   <div class="nav-links">
     <a href="#kurse">Kurse</a>
+    <a href="#inhalte">Inhalte</a>
     <a href="#preise">Preise</a>
     <a href="#ablauf">Ablauf</a>
     <a href="#faq">FAQ</a>
@@ -348,10 +388,76 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 
   </div>
 </section>
 
+<!-- INHALTE -->
+<section id="inhalte">
+  <div class="reveal">
+    <p class="sec-label">Kursinhalte</p>
+    <h2 class="sec-title">Was du lernst.</h2>
+    <p class="sec-sub">Alle relevanten Prüfungsthemen — strukturiert und direkt auf das Hessische Abitur abgestimmt.</p>
+  </div>
+  <div class="inhalte-grid">
+    <div class="inhalt-card lk reveal">
+      <span class="kurs-badge" style="background:var(--lk-bg);color:var(--lk);border:1px solid rgba(245,158,11,.2);margin-bottom:24px;display:inline-block;">Leistungskurs</span>
+      <div class="thema">
+        <p class="thema-name">Analysis</p>
+        <ul>
+          <li>Ableitungsregeln, Kurvendiskussion &amp; Extremwertaufgaben</li>
+          <li>Integralrechnung &amp; Flächenberechnung</li>
+          <li>Exponential- &amp; Logarithmusfunktionen</li>
+          <li>Optimierungsaufgaben &amp; Modellierung</li>
+        </ul>
+      </div>
+      <div class="thema">
+        <p class="thema-name">Analytische Geometrie</p>
+        <ul>
+          <li>Vektoren, Geraden- &amp; Ebenengleichungen</li>
+          <li>Schnitt- und Abstandsaufgaben</li>
+          <li>Lagebeziehungen &amp; Normalenvektoren</li>
+        </ul>
+      </div>
+      <div class="thema">
+        <p class="thema-name">Stochastik</p>
+        <ul>
+          <li>Binomial- &amp; Normalverteilung</li>
+          <li>Hypothesentests &amp; Signifikanzniveau</li>
+          <li>Bedingte Wahrscheinlichkeit</li>
+        </ul>
+      </div>
+    </div>
+    <div class="inhalt-card gk reveal">
+      <span class="kurs-badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid rgba(110,231,183,.2);margin-bottom:24px;display:inline-block;">Grundkurs</span>
+      <div class="thema">
+        <p class="thema-name">Analysis</p>
+        <ul>
+          <li>Differenzieren &amp; grundlegende Ableitungsregeln</li>
+          <li>Kurvendiskussion &amp; einfache Extremwertaufgaben</li>
+          <li>Einführung in die Integralrechnung</li>
+        </ul>
+      </div>
+      <div class="thema">
+        <p class="thema-name">Analytische Geometrie</p>
+        <ul>
+          <li>Grundlagen der Vektorrechnung</li>
+          <li>Geraden &amp; einfache Abstandsaufgaben</li>
+          <li>Parameterform &amp; Koordinatengleichung</li>
+        </ul>
+      </div>
+      <div class="thema">
+        <p class="thema-name">Stochastik</p>
+        <ul>
+          <li>Wahrscheinlichkeitsrechnung &amp; Laplace-Experimente</li>
+          <li>Binomialverteilung &amp; Erwartungswert</li>
+          <li>Bedingte Wahrscheinlichkeit &amp; Baumdiagramme</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PREISE -->
 <section id="preise">
   <div class="reveal">
-    <p class="sec-label">Preise & Pakete</p>
+    <p class="sec-label">Preise</p>
     <h2 class="sec-title">Transparent.<br>Fair. Einmalig.</h2>
     <p class="sec-sub">Keine Abos, keine versteckten Kosten — ein Preis, alles inklusive.</p>
   </div>
@@ -388,23 +494,6 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 
       </ul>
       <a href="anmeldung.html?kurs=gk" class="preis-btn">GK buchen →</a>
     </div>
-    <div class="preis-card featured reveal">
-      <span class="preis-badge">Kombi</span>
-      <h3 class="preis-title">Kombi-Paket</h3>
-      <p class="preis-desc">Beide Kurse — für maximale Sicherheit in der Prüfung</p>
-      <div class="preis-amount"><sup>€</sup>179</div>
-      <p class="preis-period">Einmalig · LK + GK (statt 198 €)</p>
-      <ul class="preis-features">
-        <li><span class="chk">✓</span> Beide Kurse (6 × 3,5 h)</li>
-        <li><span class="chk">✓</span> Gesamtes Übungsmaterial</li>
-        <li><span class="chk">✓</span> Alle Originalklausuren</li>
-        <li><span class="chk">✓</span> Max. 10 Teilnehmer je Gruppe</li>
-        <li><span class="chk">✓</span> Erweiterte Lernberatung</li>
-        <li><span class="chk">✓</span> 19 € gespart</li>
-      </ul>
-      <a href="anmeldung.html?kurs=beide" class="preis-btn">Kombi buchen →</a>
-      <p class="preis-note">Günstigstes Angebot</p>
-    </div>
   </div>
 </section>
 
@@ -416,7 +505,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 
       <h2 class="sec-title">So funktioniert's</h2>
       <p class="sec-sub">Von der Anmeldung bis zum bestandenen Abitur — einfach und klar.</p>
       <div class="steps">
-        <div class="step"><span class="step-num">01</span><div class="step-content"><h4>Kurs auswählen</h4><p>Wähle LK, GK oder das Kombi-Paket — je nach deinen Anforderungen und Zielen.</p></div></div>
+        <div class="step"><span class="step-num">01</span><div class="step-content"><h4>Kurs auswählen</h4><p>Wähle LK oder GK — je nach deinem Anforderungsniveau und deinen Zielen.</p></div></div>
         <div class="step"><span class="step-num">02</span><div class="step-content"><h4>Online anmelden</h4><p>Fülle das Anmeldeformular aus. Du erhältst sofort eine Bestätigungs-E-Mail.</p></div></div>
         <div class="step"><span class="step-num">03</span><div class="step-content"><h4>Zahlung</h4><p>Du erhältst eine Rechnung per E-Mail. Zahlung per Überweisung oder PayPal möglich.</p></div></div>
         <div class="step"><span class="step-num">04</span><div class="step-content"><h4>Kurs besuchen</h4><p>Erscheine an den drei Kurstagen und profitiere von intensivem Kleingruppenunterricht.</p></div></div>
@@ -455,10 +544,6 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 
         <div class="faq-a"><div class="faq-a-inner">Die Kurse werden von einer erfahrenen Lehrerin mit langjähriger Nachhilfeerfahrung und einem Bachelor-Abschluss in Informatik geleitet. Sie kennt die typischen Stolperstellen im Abitur genau und erklärt mathematische Konzepte klar, strukturiert und verständlich.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Kann ich mich für beide Kurse anmelden?<span class="faq-ic">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Ja! Mit unserem Kombi-Paket buchst du beide Kurse zum Vorzugspreis von 179 € (statt 198 €). Du sparst damit 19 €.</div></div>
-      </div>
-      <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Wie groß sind die Gruppen?<span class="faq-ic">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Jede Gruppe ist auf maximal 10 Teilnehmer begrenzt, damit jeder die Aufmerksamkeit bekommt, die er braucht.</div></div>
       </div>
@@ -492,9 +577,14 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 
     <div class="footer-contact">
       <p class="fc-head">Kontakt</p>
       <p><strong>info@abitur2026.de</strong></p>
-      <p>0123 · 456 789 0</p>
       <p>Frankfurt am Main</p>
-      <p>www.abitur2026.de</p>
+      <p style="margin-top:10px;">
+        <a href="https://wa.me/491234567890" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#0a0a0f;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:9px 16px;text-decoration:none;transition:opacity .2s;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WhatsApp schreiben
+        </a>
+      </p>
     </div>
   </div>
   <div class="footer-bottom">
@@ -506,6 +596,12 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:60px 
     </div>
   </div>
 </footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/491234567890" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <span class="wa-float-tip">Fragen? WhatsApp!</span>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
 
 <script>
 function toggleFaq(btn) {
