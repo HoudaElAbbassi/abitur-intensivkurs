@@ -526,8 +526,7 @@ textarea { resize: vertical; min-height: 90px; }
       <h2 class="form-title">Persönliche Daten</h2>
       <p class="form-subtitle">Alle mit <span style="color:var(--accent)">*</span> markierten Felder sind Pflichtfelder.</p>
 
-      <form id="anmeldeform" name="anmeldung" method="POST" data-netlify="true" novalidate>
-        <input type="hidden" name="form-name" value="anmeldung">
+      <form id="anmeldeform" name="anmeldung" action="/success.html" method="POST" netlify novalidate>
 
         <!-- Schüler -->
         <div class="form-section">
@@ -761,26 +760,10 @@ document.getElementById('anmeldeform').addEventListener('submit', function(e) {
     return;
   }
 
-  // Submit via Netlify Forms
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
   btn.textContent = 'Wird gesendet …';
-
-  const formData = new FormData(document.getElementById('anmeldeform'));
-  fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(formData).toString()
-  })
-  .then(() => {
-    document.getElementById('form-wrapper').style.display = 'none';
-    document.getElementById('success-screen').classList.add('show');
-  })
-  .catch(() => {
-    btn.disabled = false;
-    btn.textContent = 'Jetzt verbindlich anmelden';
-    alert('Fehler beim Senden. Bitte versuche es erneut oder schreib uns auf WhatsApp.');
-  });
+  document.getElementById('anmeldeform').submit();
 });
 
 // Live validation
